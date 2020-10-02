@@ -1,0 +1,146 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
+import pandas as pd
+import numpy as np
+import seaborn as sns
+
+
+# In[2]:
+
+
+data=pd.read_csv("data.csv")
+
+
+# In[3]:
+
+
+#understanding the data
+data.head()
+
+
+# In[4]:
+
+
+data.tail()
+
+
+# In[5]:
+
+
+data.shape
+
+
+# In[6]:
+
+
+data.describe()
+
+
+# In[7]:
+
+
+data.columns
+
+
+# In[8]:
+
+
+#unique value-
+data.nunique()
+
+
+# In[9]:
+
+
+data["math score"].nunique()
+
+
+# In[10]:
+
+
+#cleaning the data
+data.isnull().sum()
+
+
+# In[11]:
+
+
+student=data.drop(["race/ethnicity","parental level of education"],axis=1)
+
+
+# In[12]:
+
+
+student.head()
+
+
+# In[13]:
+
+
+#relationship analysis
+correlation=student.corr()
+sns.heatmap(correlation,xticklabels=correlation.columns,yticklabels=correlation.columns,annot=True)
+
+
+# In[14]:
+
+
+sns.pairplot(student)
+
+
+# In[15]:
+
+
+sns.relplot(x="math score",y="reading score",hue="gender",data=student)
+
+
+# In[16]:
+
+
+sns.distplot(student["math score"],bins=10)
+
+
+# In[17]:
+
+
+sns.catplot(x="math score",kind="box",data=student)
+
+
+# In[18]:
+
+
+sns.lmplot(x='math score', y='reading score',hue="gender", data=student)
+
+
+# In[19]:
+
+
+#violin plot
+sns.set_style('whitegrid')
+colors = [
+                    '#C03028',  # Fighting
+                    '#F85888',  # Psychic
+                    
+                   ]
+sns.violinplot(x='math score', y='gender', data=student, 
+               palette=colors)
+
+
+# In[20]:
+
+
+#swarmplot
+sns.swarmplot(x='math score', y='gender', data=student, 
+              palette=colors)
+
+
+# In[21]:
+
+
+#joint plot
+sns.jointplot(x='math score', y='reading score', data=student)
+
